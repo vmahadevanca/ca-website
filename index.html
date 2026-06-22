@@ -896,6 +896,192 @@
 }
 
 </style>
+
+  <!-- Libraries used for Save as PDF / Save as Image -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+
+<style id="export-fix-css">
+  .vm-export-overlay {
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 2147483647 !important;
+    background: rgba(255,255,255,0.01) !important;
+    overflow: auto !important;
+    pointer-events: none !important;
+  }
+
+  .vm-export-sheet {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 900px !important;
+    min-height: 400px !important;
+    background: #ffffff !important;
+    color: #14213d !important;
+    padding: 44px 50px !important;
+    box-sizing: border-box !important;
+    font-family: Arial, "Segoe UI", sans-serif !important;
+    line-height: 1.48 !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+  }
+
+  .vm-export-header {
+    display: flex !important;
+    align-items: center !important;
+    gap: 24px !important;
+    padding-bottom: 22px !important;
+    border-bottom: 5px solid #c8861f !important;
+    margin-bottom: 24px !important;
+  }
+
+  .vm-export-logo {
+    width: 150px !important;
+    height: 105px !important;
+    object-fit: contain !important;
+    border: 1px solid rgba(8,28,56,.12) !important;
+    border-radius: 16px !important;
+    padding: 8px !important;
+    background: #fff !important;
+  }
+
+  .vm-export-firm {
+    color: #081c38 !important;
+    font-family: Georgia, "Times New Roman", serif !important;
+    font-size: 32px !important;
+    line-height: 1.1 !important;
+    font-weight: 700 !important;
+    margin-bottom: 6px !important;
+  }
+
+  .vm-export-qual {
+    color: #c8861f !important;
+    font-size: 17px !important;
+    font-weight: 700 !important;
+    margin-bottom: 8px !important;
+  }
+
+  .vm-export-contact {
+    color: #475569 !important;
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+  }
+
+  .vm-export-label {
+    display: inline-block !important;
+    color: #081c38 !important;
+    background: #fff3d8 !important;
+    border: 1px solid rgba(200,134,31,.35) !important;
+    border-radius: 999px !important;
+    padding: 8px 15px !important;
+    font-size: 13px !important;
+    font-weight: 800 !important;
+    margin-bottom: 14px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+  }
+
+  .vm-export-title {
+    color: #081c38 !important;
+    font-family: Georgia, "Times New Roman", serif !important;
+    font-size: 29px !important;
+    line-height: 1.18 !important;
+    font-weight: 700 !important;
+    margin-bottom: 20px !important;
+  }
+
+  .vm-export-content .doc-export-actions,
+  .vm-export-content .doc-card-head,
+  .vm-export-content .doc-chev {
+    display: none !important;
+  }
+
+  .vm-export-content .doc-card-body,
+  .vm-export-content .export-content {
+    display: block !important;
+    padding: 0 !important;
+    background: #fff !important;
+  }
+
+  .vm-export-content .doc-section-title {
+    color: #c8861f !important;
+    font-size: 13px !important;
+    font-weight: 800 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1.2px !important;
+    margin: 18px 0 8px !important;
+  }
+
+  .vm-export-content ul,
+  .vm-export-content .doc-list,
+  .vm-export-content .sub-list {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .vm-export-content .doc-list li,
+  .vm-export-content li {
+    position: relative !important;
+    padding: 9px 0 9px 26px !important;
+    border-bottom: 1px solid rgba(8,28,56,.08) !important;
+    color: #1f2d3d !important;
+    font-size: 16px !important;
+    line-height: 1.45 !important;
+  }
+
+  .vm-export-content .doc-list li::before,
+  .vm-export-content li::before {
+    content: "✓" !important;
+    position: absolute !important;
+    left: 0 !important;
+    top: 9px !important;
+    color: #1f7a3e !important;
+    font-weight: 900 !important;
+  }
+
+  .vm-export-content .sub-list {
+    margin-top: 6px !important;
+    padding-left: 16px !important;
+  }
+
+  .vm-export-content .sub-list li {
+    font-size: 14px !important;
+    color: #64748b !important;
+    border-bottom: 0 !important;
+    padding: 4px 0 4px 16px !important;
+  }
+
+  .vm-export-content .sub-list li::before {
+    content: "•" !important;
+    color: #c8861f !important;
+    top: 4px !important;
+  }
+
+  .vm-export-content .note-box {
+    background: #fff8ea !important;
+    border-left: 4px solid #c8861f !important;
+    padding: 12px 15px !important;
+    border-radius: 0 10px 10px 0 !important;
+    color: #6d4d00 !important;
+    font-size: 14px !important;
+    margin: 13px 0 !important;
+  }
+
+  .vm-export-footer {
+    margin-top: 28px !important;
+    padding-top: 16px !important;
+    border-top: 1px solid rgba(8,28,56,.12) !important;
+    color: #64748b !important;
+    font-size: 12px !important;
+    text-align: center !important;
+    line-height: 1.5 !important;
+  }
+</style>
+
 </head>
 
 <body>
@@ -2575,5 +2761,156 @@
     showPage((location.hash || '#home').replace('#', ''), false);
 
   </script>
+
+<script>
+/* ===== Robust Save as PDF / Save as Image - visible capture fix ===== */
+function vmSanitizeFileName(name) {
+  return (name || "Document_Checklist")
+    .replace(/[\\/:*?"<>|]+/g, "")
+    .replace(/\s+/g, "_")
+    .substring(0, 80);
+}
+
+function vmWait(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function exportDocCard(button, type) {
+  const originalText = button ? button.textContent : "";
+  let overlay = null;
+
+  try {
+    if (!button) throw new Error("Button not found.");
+    button.disabled = true;
+    button.textContent = type === "pdf" ? "Preparing PDF..." : "Preparing Image...";
+
+    const card = button.closest(".doc-card");
+    if (!card) throw new Error("Document card not found.");
+
+    const titleEl = card.querySelector(".doc-title");
+    const bodyEl = card.querySelector(".doc-card-body");
+    const title = titleEl ? titleEl.textContent.trim() : "Document Checklist";
+    if (!bodyEl) throw new Error("Document content not found.");
+
+    if (typeof html2canvas === "undefined") {
+      throw new Error("html2canvas library not loaded. Please check internet connection and refresh.");
+    }
+
+    const logoImg = document.querySelector(".logo-box img");
+    const logoSrc = logoImg ? logoImg.getAttribute("src") : "";
+
+    overlay = document.createElement("div");
+    overlay.className = "vm-export-overlay";
+
+    const sheet = document.createElement("div");
+    sheet.className = "vm-export-sheet";
+
+    sheet.innerHTML = `
+      <div class="vm-export-header">
+        ${logoSrc ? `<img class="vm-export-logo" src="${logoSrc}" alt="Logo">` : ""}
+        <div>
+          <div class="vm-export-firm">V. Mahadevan & Co</div>
+          <div class="vm-export-qual">Chartered Accountant</div>
+          <div class="vm-export-contact">
+            CA. V. Mahadevan, B.Com, FCA, DISA<br>
+            Mobile: 99942 86849 | Email: vmahadevanca@gmail.com<br>
+            Thanjavur, Tamil Nadu
+          </div>
+        </div>
+      </div>
+      <div class="vm-export-label">Documents Required</div>
+      <div class="vm-export-title">${title}</div>
+      <div class="vm-export-content">${bodyEl.innerHTML}</div>
+      <div class="vm-export-footer">
+        This checklist is indicative. Additional documents may be required depending on facts, service selected and applicable law.
+      </div>
+    `;
+
+    overlay.appendChild(sheet);
+    document.body.appendChild(overlay);
+
+    // Remove buttons from copied content
+    sheet.querySelectorAll(".doc-export-actions, button").forEach(el => el.remove());
+
+    // Force natural height after content is inserted
+    sheet.style.height = "auto";
+    sheet.style.minHeight = "400px";
+
+    // Allow images/fonts/layout to settle
+    await vmWait(500);
+
+    const canvas = await html2canvas(sheet, {
+      scale: 2,
+      backgroundColor: "#ffffff",
+      useCORS: true,
+      allowTaint: true,
+      logging: false,
+      scrollX: 0,
+      scrollY: 0,
+      width: sheet.offsetWidth,
+      height: sheet.scrollHeight,
+      windowWidth: sheet.offsetWidth,
+      windowHeight: sheet.scrollHeight
+    });
+
+    if (!canvas || canvas.width === 0 || canvas.height === 0) {
+      throw new Error("Canvas capture failed.");
+    }
+
+    const fileName = vmSanitizeFileName(title);
+
+    if (type === "image") {
+      const link = document.createElement("a");
+      link.download = `${fileName}.png`;
+      link.href = canvas.toDataURL("image/png");
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } else {
+      if (!(window.jspdf && window.jspdf.jsPDF)) {
+        throw new Error("jsPDF library not loaded. Please check internet connection and refresh.");
+      }
+
+      const { jsPDF } = window.jspdf;
+      const pdf = new jsPDF("p", "mm", "a4");
+
+      const pageWidth = pdf.internal.pageSize.getWidth();
+      const pageHeight = pdf.internal.pageSize.getHeight();
+
+      const margin = 8;
+      const usableWidth = pageWidth - margin * 2;
+      const imgHeight = (canvas.height * usableWidth) / canvas.width;
+
+      const imgData = canvas.toDataURL("image/jpeg", 0.98);
+      let y = margin;
+      let heightLeft = imgHeight;
+
+      pdf.addImage(imgData, "JPEG", margin, y, usableWidth, imgHeight);
+      heightLeft -= (pageHeight - margin * 2);
+
+      while (heightLeft > 0) {
+        pdf.addPage();
+        y = margin - (imgHeight - heightLeft);
+        pdf.addImage(imgData, "JPEG", margin, y, usableWidth, imgHeight);
+        heightLeft -= (pageHeight - margin * 2);
+      }
+
+      pdf.save(`${fileName}.pdf`);
+    }
+  } catch (err) {
+    console.error("Export error:", err);
+    alert("Export failed: " + (err && err.message ? err.message : "Unknown error") + "\\n\\nPlease refresh the page and try again.");
+  } finally {
+    if (overlay && overlay.parentNode) {
+      overlay.parentNode.removeChild(overlay);
+    }
+    if (button) {
+      button.disabled = false;
+      button.textContent = originalText;
+    }
+  }
+}
+</script>
+
 </body>
 </html>
